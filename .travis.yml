@@ -9,11 +9,9 @@ python:
   - "3.6-dev" # 3.6 development branch
   - "3.7-dev" # 3.7 development branch
   - "nightly" # currently points to 3.7-dev
-# command to install dependencies
 install:
   - pip install --upgrade pip setuptools wheel pytest
   - pip install --only-binary=numpy numpy
   - pip install --only-binary=scipy scipy
   - pip install --only-binary=matplotlib matplotlib
-# command to run tests
 script: pytest test
