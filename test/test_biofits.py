@@ -2,7 +2,7 @@ import numpy as np
 from biofits import hyperbola, quadratic, fit_hyperbola, fit_quadratic
 import pytest
 from hypothesis import given, strategies as st
-import sys
+np.seterr(all='raise')
 
 # Some test values to play with
 concentrations1 = np.array([0, 10, 50, 100, 150, 200, 250, 280, 400])
@@ -90,7 +90,7 @@ def test_quadratic_fit_inhibition():
     assert f0 > 0
 
 
-@given(st.lists(st.floats(), min_size=3), st.lists(st.floats(), min_size=3))
+@given(st.lists(st.floats(allow_nan=True, allow_infinity=True), min_size=3), st.lists(st.floats(allow_nan=True, allow_infinity=True), min_size=3))
 def test_hyperbolic_fit_hypothesis(concentrations, fluorescence):
     concentrations = np.array(sorted(concentrations))
     fluorescence = np.array(sorted(fluorescence))

@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy import stats
-import sys
 
 # Bad fits throw exceptions
 np.seterr(all='raise')
@@ -26,8 +25,8 @@ def fit_hyperbola(concentrations, signals):
         raise ValueError("You may not provide multiple measurements for the same X-axis value.")
     if len(concentrations) != len(signals):
         raise ValueError("You must have a signal for each given concentration!")
-    if np.any(np.isnan(signals)) or np.any(np.isnan(concentrations)):
-        raise ValueError("Your data may not contain NaNs")
+    if np.any(np.isnan(signals)) or np.any(np.isnan(concentrations)) or np.any(np.isinf(signals)) or np.any(np.isinf(concentrations)):
+        raise ValueError("Your data may not contain NaNs or infinities.")
     if np.any(concentrations[concentrations < 10**-50]) or np.any(concentrations[concentrations > 10**50]):
         raise ValueError("You provided unreasonably small or large values.")
     if np.max(signals) - np.min(signals) < 10**-50:
