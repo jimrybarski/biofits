@@ -1,6 +1,12 @@
 import numpy as np
-from biofits import hyperbola, quadratic
+from biofits import hyperbola, quadratic, fit_hyperbola, fit_quadratic
 import pytest
+from hypothesis import given, strategies as st
+import sys
+
+# Some test values to play with
+concentrations1 = np.array([0, 10, 50, 100, 150, 200, 250, 280, 400])
+fluorescence1 = np.array([0.0, 0.14, 0.30, 0.45, 0.66, 0.75, 0.93, 0.99, 1.0])
 
 
 def test_hyperbola():
@@ -55,3 +61,42 @@ def test_limit():
         assert c < i
         assert c == pytest.approx(1.0)
 
+
+def test_hyperbolic_fit():
+    f0, f0_stddev, delta_f, delta_f_stddev, kd, kd_stddev = fit_hyperbola(concentrations1, fluorescence1)
+    assert kd == pytest.approx(251.01, rel=0.001)
+    assert kd_stddev == pytest.approx(84.44, rel=0.001)
+
+
+def test_hyperbolic_fit_inhibition():
+    f0, f0_stddev, delta_f, delta_f_stddev, kd, kd_stddev = fit_hyperbola(concentrations1, fluorescence1[::-1])
+    assert kd > 0
+    assert kd_stddev > 0
+    assert delta_f < 0
+    assert f0 > 0
+
+
+def test_quadratic_fit():
+    f0, f0_stddev, delta_f, delta_f_stddev, kd, kd_stddev, constant, constant_stddev = fit_quadratic(concentrations1, fluorescence1)
+    assert kd < 200
+    assert constant > 1
+
+
+def test_quadratic_fit_inhibition():
+    f0, f0_stddev, delta_f, delta_f_stddev, kd, kd_stddev, constant, constant_stddev = fit_quadratic(concentrations1, fluorescence1[::-1])
+    assert kd > 0
+    assert kd_stddev > 0
+    assert delta_f < 0
+    assert f0 > 0
+
+
+@given(st.lists(st.floats(), min_size=3), st.lists(st.floats(), min_size=3))
+def test_hyperbolic_fit_hypothesis(concentrations, fluorescence):
+    concentrations = np.array(sorted(concentrations))
+    fluorescence = np.array(sorted(fluorescence))
+    if len(concentrations) != len(fluorescence) or len(set(concentrations)) != len(fluorescence) or len(concentrations) != len(set(fluorescence)) or len(concentrations) < 3 or len(fluorescence) < 3 or np.any(np.isnan(fluorescence)) or np.any(np.isnan(concentrations)) or len(set(concentrations)) != len(concentrations) or not any(fluorescence) or np.any(concentrations[concentrations < 10**-50]) or np.any(concentrations[concentrations > 10**50]) or np.max(fluorescence) - np.min(fluorescence) < 10**-50:
+        with pytest.raises(ValueError):
+            fit_hyperbola(concentrations, fluorescence)
+    else:
+        f0, f0_stddev, delta_f, delta_f_stddev, kd, kd_stddev = fit_hyperbola(concentrations, fluorescence)
+        assert kd > 0.0
