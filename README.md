@@ -21,12 +21,14 @@ fluorescence = np.array([17.59393811, 22.8988294, 25.30156157, 26.33397056, 27.4
 # perform the fit
 yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev = fit_hyperbola(concentrations, fluorescence)
 
-# plot the results
-p = plt.figure(figsize=(5,5 ))
+# create the fit curve, just for plotting
 x = np.linspace(min(concentrations), max(concentrations), len(concentrations)*1000)
 y = hyperbola(x, yint, delta_y, kd)
-p = plt.plot(x,y, label='fit', zorder=0)
-p = plt.plot(concentrations, fluorescence, 'o', label='data', color='black', markersize=4)
+
+# plot the results
+plt.figure(figsize=(5,5))
+plt.plot(x,y, label='fit', zorder=0)
+plt.plot(concentrations, fluorescence, 'o', label='data', color='black', markersize=4)
 text = plt.text(40, 20, "$k_{d}=%.1f \pm %.1f\ nM$" % (kd, kd_stddev), fontsize=18)
 plt.xlabel("Protein, nM", fontsize=18)
 plt.ylabel("Fluorescence (A.U.)", fontsize=18)
@@ -34,22 +36,31 @@ plt.ylabel("Fluorescence (A.U.)", fontsize=18)
 ![hyperbolic fit](hyperbolic-fit.png)
 
 ### Quadratic Fit
+
+Here we titrate a protein at various concentrations with a constant (unknown) concentration of ligand.
+
 ```python
 from biofits import fit_quadratic, quadratic
 import numpy as np
 import matplotlib.pyplot as plt
 
+# some example real-world data
 concentrations = np.array([0, 20, 40, 60, 80, 100, 120, 140, 160])
 fluorescence = np.array([4.04057221945, 8.02206664679, 9.68169248317, 10.4687043773, 10.9989947842, 11.3576978629, 11.6021191924, 11.7486026869, 11.8934660043])
+
+# perform the fit
 yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev, constant, constant_stddev = fit_quadratic(concentrations, fluorescence)
 
-p = plt.figure(figsize=(5,5 ))
+# create the fit curve, just for plotting
 x = np.linspace(min(concentrations), max(concentrations), len(concentrations)*1000)
 y = quadratic(x, yint, delta_y, kd, constant)
-p = plt.plot(x,y, label='fit', zorder=0)
-p = plt.plot(concentrations, fluorescence, 'o', label='data', color='black', markersize=4)
-text = plt.text(50, 6, "$k_{d}=%.1f \pm %.1f\ nM$" % (kd, kd_stddev), fontsize=18)
-text = plt.text(50, 5.2, "$[L]=%.1f \pm %.1f\ nM$" % (constant, constant_stddev), fontsize=18)
+
+# plot the results
+plt.figure(figsize=(5,5))
+plt.plot(x,y, label='fit', zorder=0)
+plt.plot(concentrations, fluorescence, 'o', label='data', color='black', markersize=4)
+plt.text(50, 6, "$k_{d}=%.1f \pm %.1f\ nM$" % (kd, kd_stddev), fontsize=18)
+plt.text(50, 5.2, "$[L]=%.1f \pm %.1f\ nM$" % (constant, constant_stddev), fontsize=18)
 plt.suptitle("Quadratic Fit", fontsize=18)
 plt.xlabel("Protein, nM", fontsize=18)
 plt.ylabel("Fluorescence (A.U.)", fontsize=18)
