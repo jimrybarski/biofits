@@ -6,7 +6,7 @@ python:
   - "3.6"
   - "3.6-dev" # 3.6 development branch
 install:
-  - pip install --upgrade pip setuptools wheel pytest hypothesis
+  - pip install --upgrade pip setuptools wheel pytest
   - pip install --only-binary=numpy numpy
   - pip install --only-binary=scipy scipy
   - pip install --only-binary=matplotlib matplotlib
