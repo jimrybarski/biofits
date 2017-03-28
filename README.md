@@ -33,7 +33,7 @@ text = plt.text(40, 20, "$k_{d}=%.1f \pm %.1f\ nM$" % (kd, kd_stddev), fontsize=
 plt.xlabel("Protein (nM)", fontsize=18)
 plt.ylabel("Fluorescence (A.U.)", fontsize=18)
 ```
-![hyperbolic fit](hyperbolic-fit.png)
+![hyperbolic fit](hyperbolic-fit2.png)
 
 ### Quadratic Fit
 
@@ -65,4 +65,4 @@ plt.suptitle("Quadratic Fit", fontsize=18)
 plt.xlabel("Protein (nM)", fontsize=18)
 plt.ylabel("Fluorescence (A.U.)", fontsize=18)
 ```
-![quadratic fit](quadratic-fit.png)
+![quadratic fit](quadratic-fit2.png)
