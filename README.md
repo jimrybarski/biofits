@@ -9,7 +9,7 @@ biofits won't prevent you from using the wrong equation or misinterpreting the d
 # Examples
 
 ### Hyperbolic Fit
-```
+```python
 from biofits import fit_hyperbola, hyperbola
 import numpy as np
 import matplotlib.pyplot as plt
@@ -34,7 +34,11 @@ plt.ylabel("Fluorescence (A.U.)", fontsize=18)
 ![hyperbolic fit](hyperbolic-fit.png)
 
 ### Quadratic Fit
-```
+```python
+from biofits import fit_quadratic, quadratic
+import numpy as np
+import matplotlib.pyplot as plt
+
 concentrations = np.array([0, 20, 40, 60, 80, 100, 120, 140, 160])
 fluorescence = np.array([4.04057221945, 8.02206664679, 9.68169248317, 10.4687043773, 10.9989947842, 11.3576978629, 11.6021191924, 11.7486026869, 11.8934660043])
 yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev, constant, constant_stddev = fit_quadratic(concentrations, fluorescence)
