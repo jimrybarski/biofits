@@ -8,11 +8,11 @@ biofits won't prevent you from using the wrong equation or misinterpreting the d
 
 # Installation
 
-Install dependencies:  
+#### Install dependencies:  
 `pip install numpy && pip install scipy`  
 `pip install matplotlib` (optional)  
 
-Install biofits:  
+#### Install biofits:  
 `pip install biofits`
 
 # Examples
