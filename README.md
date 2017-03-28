@@ -30,7 +30,7 @@ plt.figure(figsize=(5,5))
 plt.plot(x,y, label='fit', zorder=0)
 plt.plot(concentrations, fluorescence, 'o', label='data', color='black', markersize=4)
 text = plt.text(40, 20, "$k_{d}=%.1f \pm %.1f\ nM$" % (kd, kd_stddev), fontsize=18)
-plt.xlabel("Protein, nM", fontsize=18)
+plt.xlabel("Protein (nM)", fontsize=18)
 plt.ylabel("Fluorescence (A.U.)", fontsize=18)
 ```
 ![hyperbolic fit](hyperbolic-fit.png)
@@ -62,7 +62,7 @@ plt.plot(concentrations, fluorescence, 'o', label='data', color='black', markers
 plt.text(50, 6, "$k_{d}=%.1f \pm %.1f\ nM$" % (kd, kd_stddev), fontsize=18)
 plt.text(50, 5.2, "$[L]=%.1f \pm %.1f\ nM$" % (constant, constant_stddev), fontsize=18)
 plt.suptitle("Quadratic Fit", fontsize=18)
-plt.xlabel("Protein, nM", fontsize=18)
+plt.xlabel("Protein (nM)", fontsize=18)
 plt.ylabel("Fluorescence (A.U.)", fontsize=18)
 ```
 ![quadratic fit](quadratic-fit.png)
