@@ -6,6 +6,15 @@ This library provides functions to fit equilibrium binding data using non-linear
 It's effectively just a wrapper around SciPy's `curve_fit` function. You need to know what you're doing though,
 biofits won't prevent you from using the wrong equation or misinterpreting the data (for now).
 
+# Installation
+
+Install dependencies:  
+`pip install numpy && pip install scipy`  
+`pip install matplotlib` (optional)  
+
+Install biofits:  
+`pip install biofits`
+
 # Examples
 
 ### Hyperbolic Fit
