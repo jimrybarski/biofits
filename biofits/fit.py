@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy import stats
-from biofits.function import hyperbola, quadratic
+from biofits.function import hyperbola, quadratic, exponential
 
 # Bad fits throw exceptions
 np.seterr(all='raise')
@@ -61,3 +61,13 @@ def fit_quadratic(concentrations, signals):
     kd_stddev = covariance[2, 2] ** 0.5
     constant_stddev = covariance[3, 3] ** 0.5
     return yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev, constant, constant_stddev
+
+
+def fit_exponential(timepoints, signals):
+    (delta_y, k, constant), covariance = curve_fit(exponential, timepoints, signals,
+                                                   bounds=((-np.inf, -10**30, -np.inf), (np.inf, 10**30, np.inf)),
+                                                   p0=(0, 0, 0))
+    delta_y_stddev = covariance[0, 0] ** 0.5
+    k_stddev = covariance[1, 1] ** 0.5
+    constant_stddev = covariance[2, 2] ** 0.5
+    return delta_y, delta_y_stddev, k, k_stddev, constant, constant_stddev
