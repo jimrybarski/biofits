@@ -30,18 +30,3 @@ def quadratic(concentrations, yint, delta_y, kd, constant):
     """
     b = constant + concentrations + kd
     return yint + delta_y * ((b - np.sqrt(np.power(b, 2) - 4 * constant * concentrations)) / (2 * constant))
-
-
-def exponential(timepoints, delta_y, k, constant):
-    """
-    I = Ae^{-kt}
-
-    :param timepoints: Some measure of time as integers or floats
-    :param delta_y: Total change in signal
-    :param k: On- or off-rate
-    :param constant: Background signal
-
-    :return: array of Y values
-
-    """
-    return delta_y * np.exp(-k*timepoints) + constant
