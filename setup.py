@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = '0.21'
+VERSION = '0.22'
 
 if __name__ == '__main__':
     setup(
@@ -13,12 +13,5 @@ if __name__ == '__main__':
         url='https://github.com/jimrybarski/biofits',
         download_url='https://github.com/jimrybarski/biofits/tarball/%s' % VERSION,
         keywords=['biology', 'biochemistry', 'kinetics', 'fitting'],
-        classifiers=['Development Status :: 4 - Beta',
-                     'Intended Audience :: Science/Research',
-                     'License :: Freely Distributable',
-                     'License :: OSI Approved :: MIT License',
-                     'Programming Language :: Python :: 2',
-                     'Programming Language :: Python :: 3',
-                     'Natural Language :: English'
-                     ]
+        classifiers=['Development Status :: 4 - Beta', 'Intended Audience :: Science/Research', 'License :: Freely Distributable', 'License :: OSI Approved :: MIT License', 'Programming Language :: Python :: 2', 'Programming Language :: Python :: 3']
     )

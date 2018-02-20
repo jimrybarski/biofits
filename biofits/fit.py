@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy import stats
-from biofits.function import hyperbola, quadratic, exponential
+from biofits.function import hyperbola, quadratic
 import sys
 
 # Bad fits throw exceptions
@@ -25,7 +25,7 @@ def fit_hyperbola(concentrations, signals):
     slope, intercept, _, _, _ = stats.linregress(concentrations, signals)
     yint_min, yint_max = (0.0, np.inf) if intercept > 0 else (-np.inf, 0.0)
     delta_y_min, delta_y_max = (0.0, np.inf) if slope > 0 else (-np.inf, 0.0)
-
+    signals = [np.mean(s) for s in signals]
     sigmas = [np.std(s) for s in signals]
     if 0 in sigmas:
         # if we have scalar values, the standard deviation will be zero everywhere and this will cause a division by
@@ -80,3 +80,14 @@ def fit_quadratic(concentrations, signals):
     kd_stddev = covariance[2, 2] ** 0.5
     constant_stddev = covariance[3, 3] ** 0.5
     return yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev, constant, constant_stddev
+
+
+import biofits
+concentrations = [.001, .500, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+with open("result/kds.txt") as f:
+    for seq, cluster_intensities in intensities.items():
+        try:
+            yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev = biofits.fit_hyperbola(concentrations, signals)
+            f.write("%f\t%f\t%f\n"(seq, kd, kd_stddev)
+        except:
+            continue
