@@ -80,14 +80,3 @@ def fit_quadratic(concentrations, signals):
     kd_stddev = covariance[2, 2] ** 0.5
     constant_stddev = covariance[3, 3] ** 0.5
     return yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev, constant, constant_stddev
-
-
-import biofits
-concentrations = [.001, .500, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
-with open("result/kds.txt") as f:
-    for seq, cluster_intensities in intensities.items():
-        try:
-            yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev = biofits.fit_hyperbola(concentrations, signals)
-            f.write("%f\t%f\t%f\n"(seq, kd, kd_stddev)
-        except:
-            continue
