@@ -62,8 +62,8 @@ def test_limit():
 
 def test_hyperbolic_fit():
     yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev = fit_hyperbola(concentrations1, fluorescence1)
-    assert kd == pytest.approx(251.01, rel=0.001)
-    assert kd_stddev == pytest.approx(84.44, rel=0.001)
+    assert kd == pytest.approx(251.01, rel=0.02)
+    assert kd_stddev == pytest.approx(84.44, rel=0.02)
 
 
 def test_hyperbolic_fit_inhibition():
