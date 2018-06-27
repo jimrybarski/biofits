@@ -25,18 +25,11 @@ def fit_hyperbola(concentrations, signals):
     slope, intercept, _, _, _ = stats.linregress(concentrations, signals)
     yint_min, yint_max = (0.0, np.inf) if intercept > 0 else (-np.inf, 0.0)
     delta_y_min, delta_y_max = (0.0, np.inf) if slope > 0 else (-np.inf, 0.0)
-    signals = [np.mean(s) for s in signals]
-    sigmas = [np.std(s) for s in signals]
-    if 0 in sigmas:
-        # if we have scalar values, the standard deviation will be zero everywhere and this will cause a division by
-        # zero to occur. In this case, we just weight all points equally
-        sigmas = np.ones((len(signals),))
     (yint, delta_y, kd), covariance = curve_fit(hyperbola,
                                                 concentrations,
                                                 signals,
                                                 bounds=((yint_min, delta_y_min, sys.float_info.min*10000),
-                                                        (yint_max, delta_y_max, np.inf)),
-                                                sigma=sigmas)
+                                                        (yint_max, delta_y_max, np.inf)))
     yint_stddev = covariance[0, 0] ** 0.5
     delta_y_stddev = covariance[1, 1] ** 0.5
     kd_stddev = covariance[2, 2] ** 0.5
@@ -64,17 +57,11 @@ def fit_quadratic(concentrations, signals):
     slope, intercept, _, _, _ = stats.linregress(concentrations, signals)
     yint_min, yint_max = (0.0, np.inf) if intercept > 0 else (-np.inf, 0.0)
     delta_y_min, delta_y_max = (0.0, np.inf) if slope > 0 else (-np.inf, 0.0)
-    sigmas = [np.std(s) for s in signals]
-    if 0 in sigmas:
-        # if we have scalar values, the standard deviation will be zero everywhere and this will cause a division by
-        # zero to occur. In this case, we just weight all points equally
-        sigmas = np.ones((len(signals),))
     (yint, delta_y, kd, constant), covariance = curve_fit(quadratic,
                                                           concentrations,
                                                           signals,
                                                           bounds=((yint_min, delta_y_min, sys.float_info.min*10000, 0.0),
-                                                                  (yint_max, delta_y_max, np.inf, np.inf)),
-                                                          sigma=sigmas)
+                                                                  (yint_max, delta_y_max, np.inf, np.inf)))
     yint_stddev = covariance[0, 0] ** 0.5
     delta_y_stddev = covariance[1, 1] ** 0.5
     kd_stddev = covariance[2, 2] ** 0.5
