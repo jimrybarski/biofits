@@ -97,3 +97,11 @@ def test_quadratic_fit_inhibition():
     assert kd_stddev > 0
     assert delta_y < 0
     assert yint > 0
+
+
+def test_steves_real_data():
+    concentrations = [0.001, 0.1, 0.3, 1, 3, 10, 30, 100, 300]
+    signals = [0.297, 0.242, 0.353, 0.461, 0.543, 0.653, 0.780, 0.763, 0.701]
+    yint, yint_stddev, delta_y, delta_y_stddev, kd, kd_stddev = fit_hyperbola(concentrations, signals)
+    assert kd == pytest.approx(1.89, rel=0.05)
+    assert kd_stddev == pytest.approx(0.66, rel=0.05)
